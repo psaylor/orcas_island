@@ -1,0 +1,32 @@
+{
+  "name": "orcas_island",
+  "version": "0.1.0",
+  "description": "A website for practicing your pronunciation by reading short stories",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psaylor/orcas_island.git"
+  },
+  "keywords": [
+    "orcas",
+    "short",
+    "stories",
+    "reading",
+    "pronunciation",
+    "esl"
+  ],
+  "author": "Patricia Saylor <psaylor@mit.edu> (http://patriciasaylor.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/psaylor/orcas_island/issues"
+  },
+  "homepage": "https://github.com/psaylor/orcas_island",
+  "dependencies": {
+    "express": "^4.12.2",
+    "socket.io": "^1.3.5",
+    "sox-audio": "^0.2.0"
+  }
+}
