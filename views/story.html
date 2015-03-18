@@ -23,7 +23,7 @@
 
 
 <!-- {{>fragment}} -->
-<div class="panel panel-default {{#if isFocused(fragNum)}}focused{{/if}}"
+<div class="panel panel-default {{#if isFocused(fragNum)}}focused{{/#if isFocused(fragNum)}}"
   on-mouseenter="{{^recording}}hoverPanel{{/recording}}"
   on-mouseleave="{{^recording}}unhoverPanel{{/recording}}"
   data-fragment="{{fragNum}}">
@@ -41,7 +41,7 @@
               <i class="fa fa-stop"></i> Stop
             {{else}}
               <i class="fa fa-dot-circle-o"></i> Record
-            {{/if}}
+            {{/#if isRecording(fragNum)}}
           </button>
 
           <button type="button" 
