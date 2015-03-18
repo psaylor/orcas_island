@@ -4,11 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var rr = require('ractive-render');
-var RactiveExpress = require('ractive-express');
-// var layout = require('express-layout');
-var browserify = require('browserify-middleware');
+var layout = require('express-layout');
 
 var routes = require('./routes/index');
 var stories = require('./routes/stories');
@@ -16,15 +13,12 @@ var stories = require('./routes/stories');
 var app = express();
 
 // view engine setup
-var context = new RactiveExpress();
-app.engine('html', context.renderFile);
+app.engine('html', rr.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
-app.use('/views', express.static(path.join(__dirname, 'views')));
-// rr.config({autoloadPartials: true});
-// app.use(layout());
-app.use(express.static(path.join(__dirname, 'public'))); // TODO explain what this means for how you access files in public directory (don't prefix them with)
-app.get('/js/bundle.js', browserify(['lodash', 'async', 'ractive-express']));
+rr.config({autoloadPartials: true});
+app.use(layout());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
