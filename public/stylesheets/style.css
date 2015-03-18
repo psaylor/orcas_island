@@ -1,8 +1,118 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 80px;
+  padding-bottom: 30px;
 }
 
 a {
   color: #00B7FF;
+}
+
+/* Volume Meter Classes */
+.fill {
+  -webkit-text-fill-color : rgb(211, 211, 211);
+  color: rgb(211, 211, 211);
+  -webkit-transition: height 70ms ease;
+  -moz-transition: height 70ms ease;
+  -ms-transition: height 70ms ease;
+  transition: height 70ms ease;
+  max-height: 45%;
+  overflow: hidden;
+}
+
+.stroked {
+  -webkit-text-stroke: 1px #1f6fd9;
+  -webkit-text-fill-color: #1f6fd9;
+  color: #1f6fd9;
+}
+
+.stroked-green {
+  -webkit-text-stroke: 1px #138651;
+  -webkit-text-fill-color: #138651;
+  color: #138651;
+}
+
+.stroked-orange {
+  -webkit-text-stroke: 1px #ff6910;
+  -webkit-text-fill-color: #ff6910;
+  color: #ff6910;
+}
+
+.stroked-red {
+  -webkit-text-stroke: 1px #a12525;
+  -webkit-text-fill-color: #a12525;
+  color: #a12525;
+}
+
+.glyph {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.align-bottom {
+  vertical-align: bottom;
+}
+
+/* Mispro Demo Classes */
+.big-text {
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 1.4;
+}
+
+.word {
+  padding-right: 0.3em;
+}
+
+.strong {
+  font-weight: 500;
+}
+
+.slant {
+  font-style: italic;
+}
+
+.content-buttons {
+  margin-bottom: 15px;
+}
+
+.mispro {
+  color: red;
+}
+
+.thumbnail img {
+  opacity: 0.7;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.thumbnail:hover {
+  box-shadow: 0 0 3px 1px rgb(31,111,217);
+}
+
+.thumbnail:hover img {
+  opacity: 1;
+}
+
+.readable-fragment {
+  width: inherit;
+}
+
+.done-btn {
+  display: block;
+  width: 50%;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.focused .content-buttons {
+  visibility: visible;
+}
+
+.focused .readable-fragment {
+  font-weight: 500;
 }
