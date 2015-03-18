@@ -17,18 +17,30 @@
   <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
   
   <!-- My Files -->
-  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
 
 </head>
 <body>
-{{> nav}}
+{{>nav}}
 
 <div class="container">
 
-  {{{ body }}}
+  {{>index}}
 
 </div>  <!-- End of container div -->
-
+<script src="/js/bundle.js"></script>
+<script>
+  (function(){
+    console.log("Rando script");
+    var context = new (require('ractive-express'))();
+    console.log("Created new ractive-express");
+    context.getComponent('layout', function(error, Component) {
+      if (error){throw error;}
+      var page = context.bindPage(Component, {data: {{JSON.stringify(.)}} });
+      // ... do stuff with our page viewmodel ...
+    }); 
+  })();
+</script>
 </body>
 </html>
 

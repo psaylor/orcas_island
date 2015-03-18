@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var utils = require('../public/javascripts/utils');
+var utils = require('../lib/utils');
 
 /* GET users listing. */
 router.get('/:storyId', function(req, res, next) {

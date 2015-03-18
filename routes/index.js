@@ -46,7 +46,7 @@ var stories = [
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', 
+  res.render('layout', 
     {
         author: 'Patricia Saylor',
         stories: stories,
