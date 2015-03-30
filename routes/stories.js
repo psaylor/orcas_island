@@ -7,9 +7,10 @@ router.get('/:storyId', function(req, res, next) {
     var  storyId = req.params.storyId;
     var storyDataPromise = getStoryData(storyId);
     storyDataPromise.then(function(storyData) {
-        var data = constructDataObject(storyData);
-        // console.log("Server view data:");
-        // console.log(data);
+        var data = {
+            story: storyData,
+        };
+        console.log("Server view data:", data);
         res.render('story', data);
     });
 });
@@ -29,15 +30,6 @@ var extractStoryData = function(parsedXml) {
         };
     }
     return data;
-};
-
-var constructDataObject = function(storyObj) {
-    return data = {
-        story: storyObj,
-        recording: false,
-        recordingFragment: -1, // index of the fragment currently being recorded if any
-        focusedFragment: 0,
-    };
 };
 
 var getStoryData = function(storyId) {

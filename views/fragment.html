@@ -2,16 +2,19 @@
   on-mouseenter="{{^recording}}hoverPanel{{/recording}}"
   on-mouseleave="{{^recording}}unhoverPanel{{/recording}}"
   data-fragment="[[fragNum]]">
+
   <div class="panel-body">
     <div class="row">
 
       <div class="col-lg-4 col-md-5 col-sm-6 content-buttons-container glyph"> 
         <div class="content-buttons btn-group btn-group-lg invisible" role="group" aria-label="...">
           <button type="button" 
-            class="btn record-btn {{#if isRecording([[fragNum]])}} btn-danger {{else}} btn-primary {{/if}}" 
+            class="btn record-btn 
+            {{#if isRecording([[fragNum]])}} btn-danger {{else}} btn-primary {{/if}} 
+            {{#if and(recording, !isRecording( [[fragNum]] )) }} disabled {{/if}}" 
             on-click="toggleRecord"
             data-fragment="[[fragNum]]"
-            disabled="{{ and( recording, !isRecording( [[fragNum]] ) ) }}">
+            >
             {{#if isRecording(fragNum)}}
               <i class="fa fa-stop"></i> Stop
             {{else}}
@@ -20,12 +23,15 @@
           </button>
 
           <button type="button" 
-            class="btn btn-success play-btn" 
+            class="btn btn-success play-btn 
+            {{#if !playbackReady( [[fragNum]] )}} disabled {{/if}}" 
             data-fragment="[[fragNum]]"
-            disabled="{{ playbackReady([[fragNum]]) }}"
+            data-disabled="{{ playbackReady([[fragNum]]) }}"
             >
             <!-- make disabled expr use method call on fragnum instead of list 
-            lookup so that the [[[ ]]] doesn't get misinterpreted-->
+            lookup so that the [[[ ]]] doesn't get misinterpreted
+            also move disabled state to class (bootstrap will handle it) instead of
+            the normal disabled attr, since the render strips the value from that attr-->
             <i class="fa fa-play"></i> Play
           </button>
         </div>

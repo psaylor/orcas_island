@@ -29,6 +29,7 @@ var initializeRactive = function () {
         template: template,
         data: data,
     });
+    window.ractive = storyRactive;
 
     storyRactive.on('toggleRecord', function (event) {
         console.log("Toggled!", event);
@@ -57,6 +58,8 @@ var initializeRactive = function () {
         var jqueryNode = $(event.node);
         storyRactive.set('focusedFragment', -1);
     });
+
+    
 };
 initializeRactive();
 /* 
