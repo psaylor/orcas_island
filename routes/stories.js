@@ -1,13 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var utils = require('../public/javascripts/utils');
+var utils = require('../lib/utils');
 
 /* GET users listing. */
 router.get('/:storyId', function(req, res, next) {
     var  storyId = req.params.storyId;
     var storyDataPromise = getStoryData(storyId);
     storyDataPromise.then(function(storyData) {
-        res.render('story', constructDataObject(storyData));
+        var data = constructDataObject(storyData);
+        // console.log("Server view data:");
+        // console.log(data);
+        res.render('story', data);
     });
 });
 
@@ -34,13 +37,6 @@ var constructDataObject = function(storyObj) {
         recording: false,
         recordingFragment: -1, // index of the fragment currently being recorded if any
         focusedFragment: 0,
-        playbackReady: [], // a true or false for each fragment's playback readiness
-        isFocused: function (fragNum) {
-            return this.get('focusedFragment') === fragNum;
-        },
-        isRecording: function (fragNum) {
-            return this.get('recordingFragment') === fragNum;
-        },
     };
 };
 

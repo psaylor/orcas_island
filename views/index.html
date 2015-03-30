@@ -4,11 +4,19 @@
     Improve your English pronunciation by reading short stories and getting 
     feedback from Orca!
   </p>
-  <p><small>Built by {{author}}</small></p>
 </div>
+
 
 <div class="page-header">
   <h1>Short Stories</h1>
 </div>
 
-{{> story_thumbnails}}
+[[> story_thumbnails]]
+
+<div>
+  <p><small>Built by {{author}} <span id="0">{{author}}</span></small></p>
+  <p><small>Built by ((author)) <span id="2">((author))</span> </small></p>
+  <p><small>Built by || author || <span id="4"> || author || </span></small></p>
+</div>
+
+<script src="/js/index.js"></script>

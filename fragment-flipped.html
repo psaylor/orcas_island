@@ -1,0 +1,25 @@
+<div class="panel panel-default {{#if isFocused(fragNum)}}focused{{/if}}"
+  on-mouseenter="hover" on-mouseleave="unhoverPanel" onclick="clicker" data-fragment="{{fragNum}}">
+
+
+  <button type="button" 
+    class="btn record-btn {{#if isRecording(fragNum) }} btn-danger {{else}} btn-primary {{/if}}" 
+    on-click="toggleRecord"
+    data-fragment={{fragNum}}
+    disabled="{{recording && !isRecording(fragNum)}}">
+    {{#if isRecording(fragNum)}}
+      <i class="fa fa-stop"></i> Stop
+    {{else}}
+      <i class="fa fa-dot-circle-o"></i> Record
+    {{/if}}
+  </button>
+
+  <button type="button" 
+    class="btn btn-success play-btn" 
+    data-fragment="{{fragNum}}"
+    disabled="{{playbackReady(fragNum)}}">
+    <i class="fa fa-play"></i> Play
+  </button>
+       
+  
+</div>

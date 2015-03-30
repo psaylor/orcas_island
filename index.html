@@ -16,19 +16,27 @@
   <!-- Other Third Party Libraries -->
   <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
   
-  <!-- My Files -->
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
 
 </head>
 <body>
-[[> nav]]
 
-<div class="container" id="body-container">
 
-  [[[ body ]]]
+<div class="container">
+  <h2>Simple Template</h2><div id="c1"></div>
+  <h2>Slightly More</h2><div id="c2"></div>
+  <h2>Even More Complex</h2><div id="c3"></div>
+  <h2>Breaker?</h2><div id="c4"></div>
+  <h1>Ultimates</h1>
+  <h2>Ultimate Template Rendered wtih [[ ]]</h2><div id="c5"></div>
+  <h2>Second Rendering with {{}}</h2><div id="c6"></div>
+  <h2>{{}} Render after parse</h2><div id="c7"></div>
+  <div id="c8"></div>
+
 
 </div>  <!-- End of container div -->
 
+<script src="index.js"></script>
+<script src="index2.js"></script>
 </body>
 </html>
 
