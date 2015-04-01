@@ -20,13 +20,7 @@ rr.config({autoloadPartials: true});
 rr.clearCache();
 // use the delimiters normally for static binding for server side rendering
 rr.config({
-  // delimiters: ['[[', ']]'],
-  // tripleDelimiters: ['[[[', ']]]'],
   escapeDelimiters: ['{{', '}}'],
-});
-app.use(function(req, res, next) {
-  var render = res.render;
-  next();
 });
 app.use(layout());
 app.use(express.static(path.join(__dirname, 'public')));

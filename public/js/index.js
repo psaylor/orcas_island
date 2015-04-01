@@ -5,7 +5,6 @@ var data = {
 };
 
 var rendered = $(".jumbotron").html();
-console.log("Ractive-rendered", rendered);
 if (rendered) {
     r0 = new Ractive({
         el: '0',

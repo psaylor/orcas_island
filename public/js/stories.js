@@ -1,4 +1,5 @@
 $(function() {
+
 console.log("Running stories.js");
 var data = {
     recording: false,
@@ -21,7 +22,6 @@ var data = {
 
 var element = $("#story-container");
 var template = element.html();
-console.log("Pre-rendered template:", template);
 
 var initializeRactive = function () {
     storyRactive = new Ractive({
@@ -45,35 +45,30 @@ var initializeRactive = function () {
     });
 
     storyRactive.on('hoverPanel', function (event) {
-        console.log("Hover");
         var jqueryNode = $(event.node);
         var fragmentNum = jqueryNode.data("fragment");
-        console.log("Hovered fragment:", fragmentNum);
         storyRactive.set('focusedFragment', fragmentNum);
 
     });
 
     storyRactive.on('unhoverPanel', function (event) {
-        console.log("Unhover");
         var jqueryNode = $(event.node);
         storyRactive.set('focusedFragment', -1);
     });
 
-    
+
 };
 initializeRactive();
 /* 
-if you load the client-side js for a ractive template in its template, 
-then you can't use a top level element (because it will include the script tag 
-that loaded this file, and will circularly load, render, re-insert its own script
-tag into the page, re-load, etc). 
-So either...
-- strip out the script tag
-- hoist it to the top
-- put it in the layout?
-- use a smaller container that doesn't include the script tag
+    if you load the client-side js for a ractive template in its template, 
+    then you can't use a top level element (because it will include the script tag 
+    that loaded this file, and will circularly load, render, re-insert its own script
+    tag into the page, re-load, etc). 
+    So either...
+    - strip out the script tag
+    - hoist it to the top
+    - put it in the layout?
+    - use a smaller container that doesn't include the script tag
 */
-
-
 
 });

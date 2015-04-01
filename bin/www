@@ -5,8 +5,10 @@
  */
 
 var app = require('../app');
+var appSocket = require('../appSocket');
 var debug = require('debug')('orcas_island:server');
 var https = require('http');
+
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +22,8 @@ app.set('port', port);
  */
 
 var server = https.createServer(app);
+// hook up socket.io for the server
+appSocket(server);
 
 /**
  * Listen on provided port, on all network interfaces.

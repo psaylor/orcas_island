@@ -42,3 +42,7 @@ destination is not empty, continue? [y/N] y
 still having npm install issues, so do:
 549 patriciasaylor:orcas_island$ sudo chown -R $USER ~/.npm
 550 patriciasaylor:orcas_island$ sudo chown -R $USER /usr/local/lib/node_modules
+
+new recognition file:
+cd ./for_trish
+./run_misp_detect_proposed.sh $1
