@@ -34,7 +34,7 @@ var AppSocket = function(server) {
 
         ss(socket).on('audioRecording', function(stream, data) {
             console.log("Expecting normal audio stream");
-            console.log("Got stream for audioRecording and data", data, 'stream', stream);
+            console.log("Got stream for audioRecording and data", data, 'stream');
             console.log("Stream readable?", stream.readable, "Writable?", stream.writable);
 
             var stream_id = data.fragment;
@@ -48,22 +48,18 @@ var AppSocket = function(server) {
             console.log("Saving converted wav audio to file " + wavFileName);
 
             var rawFileWriter = fs.createWriteStream(rawFileName, {encoding: 'binary'});
-            stream.pipe(rawFileWriter);
 
-            rawFileWriter.on('data', function(d) {
-                console.log("Writing to raw file");
-            });
-
-            rawFileWriter.on('end', function() {
-                console.log('End of writing to raw file');
-            });
-
-            stream.on('data', function(d) {
-                console.log('Got stream data', typeof(d));
-            });
             stream.on('end', function(e) {
                 console.log('stream ended');
             });
+
+            stream.pipe(rawFileWriter);
+            
+        });
+
+        socket.on('audioChunk', function (audioData) {
+            console.log("on audioChunk", audioData.chunk, typeof(audioData.array));
+            // console.log("Audio Data", audioData.array);
         });
     });
 

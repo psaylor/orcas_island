@@ -43,29 +43,51 @@ define(['jquery', 'sharedAudio', 'storyRactive', 'socketio', 'socketio-stream'],
             // console.log("Setting up record button", recordBtn, fragmentElement);
             fragmentElement = $(fragmentElement);
             var binaryAudioStream = null;
+            var audioMetadata = { 
+                "fragment": fragmentElement.data("fragment"),
+                "text": fragmentElement.data("text"),
+                "sampleRate": context.sampleRate,
+            };
 
             var setupStream = function() {
                 console.log("Setting up new stream");
-                var audioMetadata = { 
-                    "fragment": fragmentElement.data("fragment"),
-                    "text": fragmentElement.data("text"),
-                    "sampleRate": context.sampleRate,
-                };
-                var audioStream = ioStream.createStream();
-                ioStream(socket).emit('audioRecording', audioStream, audioMetadata);
+                
+                binaryAudioStream = ioStream.createStream();
+                ioStream(socket).emit('audioRecording', binaryAudioStream, audioMetadata);
+                binaryAudioStream.on('data', function(d) {
+                    console.log("binaryAudioStream data", typeof(d), d);
+                });
                 // ss.createBlobReadStream(file).pipe(stream);
 
                 recording = true;
                 storyComponent.set('recording', recording);
-                return audioStream;
+                return binaryAudioStream;
             };
 
+            var audioChunk = 0;
             var recorderProcess = function (audioProcessingEvent) {
                 // since we are recording in mono we only need the left channel
                 var left = audioProcessingEvent.inputBuffer.getChannelData(0); // PCM data samples from left channel
                 var converted = convertFloat32ToInt16(left);
-                binaryAudioStream.write(converted); // TODO *************
                 console.log("Writing buffer to binary stream: %d ", converted.byteLength);
+
+                var audioBlob = new Blob([converted]);
+
+                /* this works to stream the audio as a blob */
+                // var blobStream = ioStream.createBlobReadStream(audioBlob);
+                // var blobCounter = 0;
+                // blobStream.on('data', function(chunk) {
+                //     console.log('Blob stream sent data so far: ', blobCounter, chunk.length, typeof(chunk), chunk);
+                //     blobCounter+=1;
+                //     binaryAudioStream.write(chunk);
+                // });
+
+                /* this also works but creates new stream for every chunk*/
+                // blobStream.pipe(binaryAudioStream);
+
+                /* send blob chunks directly through the first stream? this does not work*/
+                // binaryAudioStream.write(audioBlob);
+                
             };
 
             var recorderBufferSize = 2048;
@@ -93,6 +115,8 @@ define(['jquery', 'sharedAudio', 'storyRactive', 'socketio', 'socketio-stream'],
 
             var stopRecording = function () {
                 recorder.disconnect();
+                binaryAudioStream.end();
+                audioChunk = 0;
                 recording = false;
                 storyComponent.set('recording', recording);
                 storyComponent.set('recordingFragment', -1);
