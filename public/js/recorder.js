@@ -53,12 +53,7 @@ define(['jquery', 'sharedAudio', 'storyRactive', 'socketio', 'socketio-stream'],
                 console.log("Setting up new stream");
                 
                 binaryAudioStream = ioStream.createStream();
-                ioStream(socket).emit('audioRecording', binaryAudioStream, audioMetadata);
-                binaryAudioStream.on('data', function(d) {
-                    console.log("binaryAudioStream data", typeof(d), d);
-                });
-                // ss.createBlobReadStream(file).pipe(stream);
-
+                ioStream(socket).emit('audioStream', binaryAudioStream, audioMetadata);
                 recording = true;
                 storyComponent.set('recording', recording);
                 return binaryAudioStream;
@@ -71,23 +66,10 @@ define(['jquery', 'sharedAudio', 'storyRactive', 'socketio', 'socketio-stream'],
                 var converted = convertFloat32ToInt16(left);
                 console.log("Writing buffer to binary stream: %d ", converted.byteLength);
 
-                var audioBlob = new Blob([converted]);
-
-                /* this works to stream the audio as a blob */
-                // var blobStream = ioStream.createBlobReadStream(audioBlob);
-                // var blobCounter = 0;
-                // blobStream.on('data', function(chunk) {
-                //     console.log('Blob stream sent data so far: ', blobCounter, chunk.length, typeof(chunk), chunk);
-                //     blobCounter+=1;
-                //     binaryAudioStream.write(chunk);
-                // });
-
-                /* this also works but creates new stream for every chunk*/
-                // blobStream.pipe(binaryAudioStream);
-
-                /* send blob chunks directly through the first stream? this does not work*/
-                // binaryAudioStream.write(audioBlob);
-                
+                /* this is hacky but avoids a lot of overhead, should make a wrapper
+                library that includes this function though since Buffer is a Node.js thing
+                or just make all client side with browserify instead of requirejs */
+                binaryAudioStream.writeAudio(converted);
             };
 
             var recorderBufferSize = 2048;

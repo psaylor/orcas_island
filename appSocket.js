@@ -15,15 +15,6 @@ var TXT_FILE_NAME_FORMAT = '%s/utterance_%d.txt';
 var AppSocket = function(server) {
     var io = socketIO(server);
 
-    /* by default the client will connect to '/', so while these routes are
-    * super cool, we won't use them unless we have to */
-    // var stories = io
-    //     .of('/stories/')
-    //     .on('connection', function(socket) {
-    //         console.log("Client reading a story");
-    //     });
-    
-
     io.on('connection', function(socket) {
         console.log("Connected to client socket"); 
         var timestamp = new Date().getTime();
@@ -32,10 +23,8 @@ var AppSocket = function(server) {
 
         io.emit('tuning in', {listening: 'to you'});
 
-        ss(socket).on('audioRecording', function(stream, data) {
-            console.log("Expecting normal audio stream");
-            console.log("Got stream for audioRecording and data", data, 'stream');
-            console.log("Stream readable?", stream.readable, "Writable?", stream.writable);
+        ss(socket).on('audioStream', function(stream, data) {
+            console.log("Receiving stream audio for data", data);
 
             var stream_id = data.fragment;
             var stream_text = data.text.toLowerCase().replace(".", "") + "\n";
