@@ -32,6 +32,7 @@
     "escape-delims": "^0.4.0",
     "express": "~4.12.0",
     "express-layout": "^0.1.0",
+    "extfs": "0.0.7",
     "morgan": "~1.5.1",
     "promise": "^6.1.0",
     "ractive": "^0.6.1",
@@ -40,6 +41,7 @@
     "socket.io": "^1.3.5",
     "socket.io-stream": "^0.6.0",
     "sox-audio": "^0.2.0",
+    "through": "^2.3.7",
     "xml2js": "^0.4.6"
   }
 }

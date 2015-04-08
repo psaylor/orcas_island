@@ -17,9 +17,27 @@ define(['jquery', 'crossBrowserAudio', 'promise'],
                 console.log('Media access rejected.', error);
             });
 
+        var promiseDecodeAudioData = function promiseDecodeAudioData(audioBuffer) {
+            return new Promise(function decodeAudioDataPromise(resolve, reject) {
+                context.decodeAudioData.call(context, audioBuffer, resolve, reject);
+            });
+        };
+
+        var promisePlayAudioData = function promisePlayAudioData (decodedAudioBuffer) {
+            return new Promise(function playAudioDataPromise(resolve, reject) {
+                var source = context.createBufferSource();
+                source.buffer = decodedAudioBuffer;
+                source.connect(context.destination);
+                source.start();
+                source.onended = resolve;
+            });
+        };
+
         var sharedAudio = {
             audioContext: context,
             audioStreamPromise: audioStreamPromise,
+            promiseDecodeAudioData: promiseDecodeAudioData,
+            promisePlayAudioData: promisePlayAudioData,
         };
 
         return sharedAudio;

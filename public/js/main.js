@@ -9,33 +9,8 @@ require.config({
     },
 });
 
-require(['jquery', 'crossBrowserAudio', 'storyRactive', 'socketio', 'recorder'], 
-    function($, crossBrowserAudio, storyRactive, io, recorder) {
+require(['jquery', 'crossBrowserAudio', 'storyRactive', 'socketio', 'recorder', 'player'], 
+    function($, crossBrowserAudio, storyRactive, io, recorder, player) {
         console.log("Loaded requirements for main.js");
-
-        var context = new crossBrowserAudio.AudioContext();
-        var SESSION = {audio: true, video: false};
-        var audioStreamSource = null;
-        var getUserMedia = crossBrowserAudio.getUserMedia;
-
-        var storyData = storyRactive.data;
-        var storyComponent = storyRactive.component;
-
-        var socket = io();
-
-        socket.on("connect", function() {
-          console.log("Client socket connected!");
-        });
-
-        socket.on("disconnect", function() {
-            console.log("Client disconnected from server, please wait...");
-        });
-
-        socket.on('tuning in', function(msg) {
-          console.log("Got tuned in msg:", msg);
-        });
-
-
-
 
 });

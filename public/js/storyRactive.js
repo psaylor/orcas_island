@@ -4,8 +4,10 @@ define(['jquery', 'ractive'], function($, Ractive) {
         recording: false,
         recordingFragment: -1, // index of the fragment currently being recorded if any
         focusedFragment: 0,
+        playing: false,
+        playbackStates: [],
         playbackReady: function (fragNum) {
-            return false;
+            return this.get('playbackStates')[fragNum] === true;
         }, // a true or false for each fragment's playback readiness
         isFocused: function (fragNum) {
             return this.get('focusedFragment') === fragNum;
@@ -19,7 +21,7 @@ define(['jquery', 'ractive'], function($, Ractive) {
 
     };
 
-    var element = $("#story-container");
+    var element = $('#story-container');
     var template = element.html();
     /* Initialize the Ractive component */
     storyRactive = new Ractive({
@@ -29,9 +31,9 @@ define(['jquery', 'ractive'], function($, Ractive) {
     });
 
     // storyRactive.on('toggleRecord', function (event) {
-    //     console.log("Toggled!", event);
+    //     console.log('Toggled!', event);
     //     var jqueryNode = $(event.node);
-    //     var fragmentNum = jqueryNode.data("fragment");
+    //     var fragmentNum = jqueryNode.data('fragment');
     //     if (storyRactive.get('recording')) {
     //         storyRactive.set('recordingFragment', -1);
     //         storyRactive.set('recording', false);
@@ -43,7 +45,7 @@ define(['jquery', 'ractive'], function($, Ractive) {
 
     storyRactive.on('hoverPanel', function (event) {
         var jqueryNode = $(event.node);
-        var fragmentNum = jqueryNode.data("fragment");
+        var fragmentNum = jqueryNode.data('fragment');
         storyRactive.set('focusedFragment', fragmentNum);
 
     });
@@ -54,13 +56,8 @@ define(['jquery', 'ractive'], function($, Ractive) {
     });
 
     storyRactive.on('doneReading', function (event) {
-        console.log("Done Reading Story");
+        console.log('Done Reading Story');
         // process
-    });
-    
-    storyRactive.on('playFragment', function (event) {
-        var fragment = $(event.node);
-        console.log('Playback request for fragment', fragment.data());
     });
 
     return {

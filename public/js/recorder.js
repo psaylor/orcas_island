@@ -1,20 +1,13 @@
-define(['jquery', 'sharedAudio', 'storyRactive', 'socketio', 'socketio-stream'],
-    function($, sharedAudio, storyRactive, io, ioStream) {
+define(['jquery', 'sharedAudio', 'storyRactive', 'clientSocket'],
+    function($, sharedAudio, storyRactive, clientSocket) {
 
         var context = sharedAudio.audioContext;
         var AUDIO_SAMPLING_RATE = context.sampleRate;
 
         console.log("Recorder.js");
 
-        var socket = io();
-
-        socket.on("connect", function() {
-          console.log("Client socket connected!");
-        });
-
-        socket.on("disconnect", function() {
-            console.log("Client disconnected from server, please wait...");
-        });
+        var socket = clientSocket.socket;
+        var ioStream = clientSocket.ioStream;
 
         var storyData = storyRactive.data;
         var storyComponent = storyRactive.component;
@@ -38,6 +31,20 @@ define(['jquery', 'sharedAudio', 'storyRactive', 'socketio', 'socketio-stream'],
                 document.selection.empty();
             }
         };
+
+        storyComponent.on('toggleRecord', function (event) {
+            var element = $(event.node);
+            var fragment = element.data('fragment');
+            console.log('Toggling recording for fragment', fragment);
+            console.log('event', event);
+            console.log('element', element);
+        });
+
+        socket.on('audioStreamResult', function(result) {
+            console.log('Audio stream result for', result.fragment,':', result.success);
+            storyData.playbackStates[result.fragment] = result.success;
+            storyComponent.set('playbackStates', storyData.playbackStates);
+        });
 
         var recordButtonSetup = function(recordBtn, fragmentElement) {
             // console.log("Setting up record button", recordBtn, fragmentElement);
