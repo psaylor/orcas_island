@@ -1,8 +1,11 @@
 define(['jquery', 'ractive'], function($, Ractive) {
 
     var data = {
-        recording: false,
+
         recordingFragment: -1, // index of the fragment currently being recorded if any
+        recording: function () {
+            return this.get('recordingFragment') !== -1;
+        },
         focusedFragment: 0,
         playing: false,
         playbackStates: [],
@@ -24,45 +27,44 @@ define(['jquery', 'ractive'], function($, Ractive) {
     var element = $('#story-container');
     var template = element.html();
     /* Initialize the Ractive component */
-    storyRactive = new Ractive({
+    ractiveComponent = new Ractive({
         el: element,
         template: template,
         data: data,
     });
 
-    // storyRactive.on('toggleRecord', function (event) {
-    //     console.log('Toggled!', event);
-    //     var jqueryNode = $(event.node);
-    //     var fragmentNum = jqueryNode.data('fragment');
-    //     if (storyRactive.get('recording')) {
-    //         storyRactive.set('recordingFragment', -1);
-    //         storyRactive.set('recording', false);
-    //     } else {
-    //         storyRactive.set('recording', true);
-    //         storyRactive.set('recordingFragment', fragmentNum);
-    //     }
-    // });
-
-    storyRactive.on('hoverPanel', function (event) {
+    ractiveComponent.on('hoverPanel', function (event) {
         var jqueryNode = $(event.node);
         var fragmentNum = jqueryNode.data('fragment');
-        storyRactive.set('focusedFragment', fragmentNum);
+        ractiveComponent.set('focusedFragment', fragmentNum);
 
     });
 
-    storyRactive.on('unhoverPanel', function (event) {
+    ractiveComponent.on('unhoverPanel', function (event) {
         var jqueryNode = $(event.node);
-        storyRactive.set('focusedFragment', -1);
+        ractiveComponent.set('focusedFragment', -1);
     });
 
-    storyRactive.on('doneReading', function (event) {
+    ractiveComponent.on('doneReading', function (event) {
         console.log('Done Reading Story');
         // process
     });
 
     return {
         data: data,
-        component: storyRactive,
+        component: ractiveComponent,
     };
 
 });
+
+/* 
+    if you load the client-side js for a ractive template in its template, 
+    then you can't use a top level element (because it will include the script tag 
+    that loaded this file, and will circularly load, render, re-insert its own script
+    tag into the page, re-load, etc). 
+    So either...
+    - strip out the script tag
+    - hoist it to the top
+    - put it in the layout?
+    - use a smaller container that doesn't include the script tag
+*/

@@ -1,16 +1,28 @@
 require.config({
     paths: {
-        'jquery': 'https://code.jquery.com/jquery-1.11.0.min',
-        'ractive': 'http://cdn.ractivejs.org/latest/ractive.min',
-        'modernizr': 'third-party/modernizr.custom.68208',
-        'socketio': '/socket.io/socket.io',
-        'socketio-stream': 'third-party/socket.io-stream',
-        'promise': 'https://cdn.jsdelivr.net/bluebird/latest/bluebird.min',
+        'jquery': [
+            'https://code.jquery.com/jquery-1.11.0.min',
+            '../../node_modules/spoke-client/lib/js/third-party/jquery-1.11.0.min',
+        ],
+        'bootstrap': [
+            '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
+        ],
+        'ractive': [
+            'https://cdnjs.cloudflare.com/ajax/libs/ractive/0.7.2/ractive.min',
+            '../../node_modules/spoke-client/lib/js/third-party/ractive-0.7.2.min',
+        ],
+        'spoke': 'spoke',
+    },
+    shim: {
+        'bootstrap': {
+            'deps': ['jquery'],
+        },
     },
 });
 
-require(['jquery', 'crossBrowserAudio', 'storyRactive', 'socketio', 'recorder', 'player'], 
-    function($, crossBrowserAudio, storyRactive, io, recorder, player) {
-        console.log("Loaded requirements for main.js");
+/* Cannot reuse names of spoke module files, like player and recorder; maybe I should rename those files to spokePlayer and spokeRecorder*/
+require(['ractiveUi', 'playerSetup', 'recorderSetup'], 
+    function() {
+        console.log('Loaded requirements for main.js');
 
 });

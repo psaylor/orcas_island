@@ -11,7 +11,7 @@
   </h1>
   <h1>
     <small>Focused {{focusedFragment}} </small>
-    <small>Recording "{{recording}}"({{recordingFragment}})</small>
+    <small>Recording "{{recording()}}"({{recordingFragment}})</small>
   </h1>
 </div> <!-- end of header -->
 
@@ -31,7 +31,7 @@
 <!-- see, now the script tag can easily be excluded by using a template over 
   #stories-container instead of #body-container, which includes all the 
   contents of this file -->
-<script data-main="/js/main" src='/js/third-party/require.js'></script>
+<script data-main="/js/main" src="/js/third-party/require.js"></script>
 
 <!-- 
 So ractive strips off attributes set on disabled, even if they are "true" or "false"

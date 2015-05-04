@@ -1,6 +1,6 @@
 <div class="panel panel-default {{#if isFocused( [[fragNum]] )}}focused{{/if}}"
-  on-mouseenter="{{^recording}}hoverPanel{{/recording}}"
-  on-mouseleave="{{^recording}}unhoverPanel{{/recording}}"
+  on-mouseenter="{{^recording()}}hoverPanel{{/recording()}}"
+  on-mouseleave="{{^recording()}}unhoverPanel{{/recording()}}"
   data-fragment="[[fragNum]]">
 
   <div class="panel-body">
@@ -11,11 +11,13 @@
           <button type="button" 
             class="btn record-btn 
             {{#if isRecording([[fragNum]])}} btn-danger {{else}} btn-primary {{/if}} 
-            {{#if and(recording, !isRecording( [[fragNum]] )) }} disabled {{/if}}" 
+            {{#if and(recording(), !isRecording( [[fragNum]] )) }} disabled {{/if}}" 
             on-click="toggleRecord"
             data-fragment="[[fragNum]]"
+            data-text="[[this.text]]"
+            data-numwords="[[this.words.length]]"
             >
-            {{#if isRecording(fragNum)}}
+            {{#if isRecording([[fragNum]])}}
               <i class="fa fa-stop"></i> Stop
             {{else}}
               <i class="fa fa-dot-circle-o"></i> Record
