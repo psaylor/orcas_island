@@ -102,6 +102,9 @@ var AppSocket = function(server) {
             };
 
             stream.pipe(rawFileWriter);
+            stream.on('data', function(data) {
+                console.log('Stream data: ', data);
+            });
             Recognizer.convertToWav(stream, clientSampleRate, wavFileName, onWavConversion);
             
         });
