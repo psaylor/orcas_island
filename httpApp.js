@@ -1,41 +1,22 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var rr = require('ractive-render');
-var layout = require('express-layout');
 var fs = require('fs');
 var logger = require('./lib/logger');
-var routes = require('./routes/index');
-var stories = require('./routes/stories');
 
 var app = express();
 
-// view engine setup
-app.engine('html', rr.renderFile);
-app.set('view engine', 'html');
-app.set('views', path.join(__dirname, 'views'));
-rr.config({autoloadPartials: true});
-rr.clearCache();
-// use the delimiters normally for static binding for server side rendering
-rr.config({
-  escapeDelimiters: ['{{', '}}'],
+/* Set up an http app that just redirects to the https version */
+
+app.get('*', function (req, res) {
+  logger.info('Http app got request; will redirect', {
+    url: req.url,
+    hostname: req.hostname,
+    port: req.app.get('port'),
+  });
+  var port = app.get('port') - 1000;
+  res.redirect('https://' + req.hostname + ':' + port + req.url);
 });
-app.use(layout());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-
-app.use('/', routes);
-app.use('/stories', stories);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,13 +25,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
-var httpsOptions = {
-  key: fs.readFileSync('./cert/client.key'),
-  cert: fs.readFileSync('./cert/client.crt'),
-  passphrase: 'client',
-  requestCert: true,
-};
 
 if (app.get('env') === 'development') {
     logger.info('Configuring app for development:', app.get('env'));
@@ -85,7 +59,4 @@ if (app.get('env') === 'development') {
     app.locals.production = true;
 }
 
-module.exports = {
-  app: app,
-  httpsOptions: httpsOptions,
-};
+module.exports = app;

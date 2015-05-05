@@ -43,6 +43,7 @@
     "sox-audio": "^0.2.0",
     "spoke-client": "git://github.com/psaylor/spoke-client",
     "through": "^2.3.7",
+    "winston": "^1.0.0",
     "xml2js": "^0.4.6"
   }
 }

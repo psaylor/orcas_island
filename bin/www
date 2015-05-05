@@ -4,11 +4,13 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app').app;
+var httpsOptions = require('../app').httpsOptions;
+var httpApp = require('../httpApp');
 var appSocket = require('../appSocket');
 var debug = require('debug')('orcas_island:server');
-var https = require('http');
-
+var http = require('http');
+var https = require('https');
 
 /**
  * Get port from environment and store in Express.
@@ -16,12 +18,17 @@ var https = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+console.log('Https app set on port: ', port);
+var httpPort = port + 1000;
+httpApp.set('port', httpPort);
+console.log('Http app set on port:', httpPort);
 
 /**
  * Create HTTP server.
  */
 
-var server = https.createServer(app);
+var httpServer = http.createServer(httpApp);
+var server = https.createServer(httpsOptions, app);
 // hook up socket.io for the server
 appSocket(server);
 
@@ -32,6 +39,8 @@ appSocket(server);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+httpServer.listen(httpPort);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -91,4 +100,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
