@@ -7,71 +7,17 @@ a {
   color: #00B7FF;
 }
 
-/* Volume Meter Classes */
-.fill {
-  -webkit-text-fill-color : rgb(211, 211, 211);
-  color: rgb(211, 211, 211);
-  -webkit-transition: height 70ms ease;
-  -moz-transition: height 70ms ease;
-  -ms-transition: height 70ms ease;
-  transition: height 70ms ease;
-  max-height: 45%;
-  overflow: hidden;
-}
-
-.stroked {
-  -webkit-text-stroke: 1px #1f6fd9;
-  -webkit-text-fill-color: #1f6fd9;
-  color: #1f6fd9;
-}
-
-.stroked-green {
-  -webkit-text-stroke: 1px #138651;
-  -webkit-text-fill-color: #138651;
-  color: #138651;
-}
-
-.stroked-orange {
-  -webkit-text-stroke: 1px #ff6910;
-  -webkit-text-fill-color: #ff6910;
-  color: #ff6910;
-}
-
-.stroked-red {
-  -webkit-text-stroke: 1px #a12525;
-  -webkit-text-fill-color: #a12525;
-  color: #a12525;
-}
-
-.glyph {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.align-bottom {
-  vertical-align: bottom;
+footer {
+  margin-top: 70px;
+  border-top: 1px solid black;
+  padding-top: 10px;
 }
 
 /* Mispro Demo Classes */
-.big-text {
-  font-size: 20px;
-  font-weight: 200;
-  line-height: 1.4;
-}
-
 .word {
   padding-right: 0.3em;
 }
 
-.strong {
-  font-weight: 500;
-}
-
-.slant {
-  font-style: italic;
-}
 
 .content-buttons {
   margin-bottom: 15px;
