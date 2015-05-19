@@ -27,8 +27,10 @@ define(['jquery', 'ractive', 'spoke'], function($, Ractive, spoke) {
             if (!read) {
                 return false;
             }
+            var misproList = this.get('mispronouncedWords');
+            console.log('checking if', word, 'is mispronounced', misproList);
             word = spoke.utils.normalizeString(word);
-            var inMispro = this.get('mispronouncedWords').indexOf(word) >= 0;
+            var inMispro = misproList.indexOf(word) >= 0;
             return (read && inMispro);
         },
 

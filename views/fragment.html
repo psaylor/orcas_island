@@ -49,7 +49,7 @@
               data-fragment="[[fragNum]]" 
               data-index="[[wordNum]]"
               on-click="playWord"
-              class="{{#if isMispronounced( [[fragNum]], '[[this]]') }} mispro-word {{/if}}"
+              class="{{#if isMispronounced( [[fragNum]], '[[normalizedWords[wordNum]]]') }} mispro-word {{/if}}"
               >
               [[ this ]]
             </span> 

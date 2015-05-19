@@ -9,6 +9,7 @@ router.get('/:storyId', function(req, res, next) {
     storyDataPromise.then(function(storyData) {
         var data = {
             story: storyData,
+
         };
         console.log("Server view data:", data);
         res.render('story', data);
@@ -20,13 +21,21 @@ var extractStoryData = function(parsedXml) {
         title: parsedXml.readable.title,
         author: parsedXml.readable.author,
         fragments: [],
+        normalizeString: function (word) {
+            console.log('called normalizeString', word);
+            var result = utils.normalizeString(word);
+            console.log('normalizeString on', word, ':', result);
+            return result;
+        },
     };
     var content = parsedXml.readable.content.split(/\n/);
     for (var i = 0; i < content.length; i++) {
         var line = content[i];
+        var text = utils.normalizeString(line);
         data.fragments[i] = {
             words: line.split(' '),
-            text: utils.normalizeString(line),
+            normalizedWords: text.split(' '),
+            text: text,
         };
     }
     return data;

@@ -11,7 +11,6 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
         magic: true,
         prefix: function (obj) {
             var mispro = obj.spelling.match(spellingRegex);
-            console.log('misproLetters', mispro);
             return obj.word.slice(0, mispro.index);
         },
         mispro: function (obj) {
@@ -65,11 +64,14 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
 
         misproRactiveComponent.on('toggleHighlight', function (event) {
             var word = misproRactiveComponent.get(event.keypath).word;
+            console.log('toggleHighlight for', word);
             var highlightSet = ui.component.get('mispronouncedWords');
+            console.log('highlightSet', highlightSet);
             var index = highlightSet.indexOf(word);
-
             if (index >= 0) {
+                console.log('was in, now removing');
                 highlightSet.splice(index, 1);
+                // console.log('new highlightSet', highlightSet);
             } else {
                 highlightSet.push(word);
             }
@@ -79,9 +81,6 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
         socket.on('result.spoke.mispro', function (misproWord) {
             console.log('Got mispro results from server:', misproWord);
             data.misproWords.push(misproWord);
-            var highlightSet = ui.component.get('mispronouncedWords');
-            highlightSet.push(misproWord.word);
-            ui.component.set('mispronouncedWords', highlightSet);
         });
 
 
