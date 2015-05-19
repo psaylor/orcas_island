@@ -48,8 +48,8 @@
             <span 
               data-fragment="[[fragNum]]" 
               data-index="[[wordNum]]"
-              on-click="playWord"
-              class="{{#if isMispronounced( [[fragNum]], '[[normalizedWords[wordNum]]]') }} mispro-word {{/if}}"
+              on-click="{{#if playbackReady([[fragNum]])}}playWord{{/if}}"
+              class="{{#if isMispronounced( [[fragNum]], '[[normalizedWords[wordNum]]]') }} mispro-word {{/if}} click-span"
               >
               [[ this ]]
             </span> 
