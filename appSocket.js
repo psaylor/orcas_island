@@ -200,12 +200,14 @@ var AppSocket = function(server) {
         });
 
         socket.on('doneReading', function () {
-            var misproDetectionPromise = mispro.misproDetectionAsync()
-                .then(function (result) {
-                    console.log('Got mispro results and parsing:', result);
-                    var parsedResults = mispro.getMisproResults(result);
-                    socket.emit('result.spoke.mispro', parsedResults);
-                });
+            console.log('Done Reading');
+            var misproOutput = mispro.misproDetectionStream();
+            var misproResultStream = mispro.getMisproResultsStream(misproOutput);
+            console.log('listening on results stream');
+            misproResultStream.on('data', function (misproWord) {
+                console.log('Mispro word:', misproWord);
+                socket.emit('result.spoke.mispro', misproWord);
+            });
         });
 
         /* 

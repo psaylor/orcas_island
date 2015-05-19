@@ -62,3 +62,7 @@ footer {
 .focused .readable-fragment {
   font-weight: 500;
 }
+
+.mispro-letters {
+  background-color: #e7c3c3;
+}

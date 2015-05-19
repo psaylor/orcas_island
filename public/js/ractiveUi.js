@@ -26,7 +26,7 @@ define(['jquery', 'ractive'], function($, Ractive) {
 
     var element = $('#story-container');
     var template = element.html();
-    // console.log('Ractive template:', template);
+    // console.log('\n\nRactive template:', template);
     /* Initialize the Ractive component */
     ractiveComponent = new Ractive({
         el: element,

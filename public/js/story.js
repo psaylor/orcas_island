@@ -21,8 +21,8 @@ require.config({
 });
 
 /* Cannot reuse names of spoke module files, like player and recorder; maybe I should rename those files to spokePlayer and spokeRecorder*/
-require(['ractiveUi', 'spoke', 'playerSetup', 'recorderSetup'], 
-    function(ui, spoke, play, rec) {
+require(['ractiveUi', 'spoke', 'playerSetup', 'recorderSetup', 'misproUi'], 
+    function(ui, spoke, play, rec, misproUi) {
     console.log('Loaded requirements for main.js');
 
     var socket = spoke.sharedSocket.getSocket();
@@ -31,10 +31,6 @@ require(['ractiveUi', 'spoke', 'playerSetup', 'recorderSetup'],
     var uiData = ui.data;
     var uiComponent = ui.component;
 
-    // ui.component.on('doneReading', function (event) {
-    //     // process the results
-    //     socket.emit('doneReading');
-    // });
 
     $('#doneBtn').click(function (e) {
         console.log('User is done reading...Processing...');
@@ -54,10 +50,5 @@ require(['ractiveUi', 'spoke', 'playerSetup', 'recorderSetup'],
         uiData.playbackStates[fragNum] = false;
         uiComponent.set('playbackStates', uiData.playbackStates);
     });
-
-    socket.on('result.spoke.mispro', function (result) {
-        console.log('Got mispro results from server:', result);
-    });
-
 
 });
