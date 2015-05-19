@@ -189,10 +189,10 @@ var AppSocket = function(server) {
                     socket.emit('success.spoke.alignment', metadata);
                 })
                 .then(function resolve (err) {
-                    return mispro.processAsync(wavFilename);
+                    return mispro.preprocessAsync(wavFilename);
                 })
                 .catch(function reject (err) {
-                    console.log('Mispro process error:', err);
+                    console.log('Mispro preprocess error:', err);
                 })
                 .then(function resolve(result) {
                     console.log('Mispro preprocess finished', result);
