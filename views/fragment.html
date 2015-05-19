@@ -3,9 +3,8 @@
   on-mouseleave="{{^recording()}}unhoverPanel{{/recording()}}"
   data-fragment="[[fragNum]]">
 
-  <div class="panel-body">
+  <div class="panel-body {{#if playbackReady( [[fragNum]] )}} panel-read {{/if}}">
     <div class="row">
-
       <div class="col-lg-4 col-md-5 col-sm-6 content-buttons-container glyph"> 
         <div class="content-buttons btn-group btn-group-lg invisible" role="group" aria-label="...">
           <button type="button" 
@@ -50,6 +49,7 @@
               data-fragment="[[fragNum]]" 
               data-index="[[wordNum]]"
               on-click="playWord"
+              class="{{#if isMispronounced( [[fragNum]], '[[this]]') }} mispro-word {{/if}}"
               >
               [[ this ]]
             </span> 

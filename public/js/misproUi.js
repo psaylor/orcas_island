@@ -2,20 +2,7 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
     function($, Ractive, spoke, ui) {
 
     console.log('Mispro UI setup');
-    var misproWords = [
-        // {
-        //     word: 'wisdom',
-        //     spelling: '***d**',
-        //     phoneme: 'd',
-        //     phonemeError: '<eps>',
-        // }, 
-        // {
-        //     word: 'selling',
-        //     spelling: '*el****',
-        //     phoneme: 'eh',
-        //     phonemeError: 'ah',
-        // },
-    ];
+    var misproWords = [];
 
     var spellingRegex = /\w+/;
 
@@ -46,7 +33,6 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
     var getPartial = function () {
         $.get('../misproTable.html')
         .done(function (partialHtml) {
-            console.log('ajax get done', partialHtml);
             initialize(partialHtml);
         });
     };
@@ -65,18 +51,37 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
         });
 
         misproRactiveComponent.on('play', function (event) {
+            var misproWord = misproRactiveComponent.get(event.keypath);
+            var data = {
+                startFragment: misproWord.utteranceId,
+                startIndex: misproWord.wordId,
+                endFragment: misproWord.utteranceId,
+                endIndex: misproWord.wordId,
+            };
+            console.log('Play word request:', data);
+            socket.emit('playbackRequest', data);
+
+        });
+
+        misproRactiveComponent.on('toggleHighlight', function (event) {
             var word = misproRactiveComponent.get(event.keypath).word;
-            console.log('Finding instance of', word, 'to play');
-            ui.data.playbackStates.forEach(function (val, index, arr) {
-                if (val) {
-                    
-                }
-            });
+            var highlightSet = ui.component.get('mispronouncedWords');
+            var index = highlightSet.indexOf(word);
+
+            if (index >= 0) {
+                highlightSet.splice(index, 1);
+            } else {
+                highlightSet.push(word);
+            }
+            ui.component.set('mispronouncedWords', highlightSet);
         });
 
         socket.on('result.spoke.mispro', function (misproWord) {
             console.log('Got mispro results from server:', misproWord);
             data.misproWords.push(misproWord);
+            var highlightSet = ui.component.get('mispronouncedWords');
+            highlightSet.push(misproWord.word);
+            ui.component.set('mispronouncedWords', highlightSet);
         });
 
 
@@ -84,7 +89,4 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
     };
 
     getPartial();
-
-    
-
 });

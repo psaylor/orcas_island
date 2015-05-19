@@ -18,13 +18,12 @@ footer {
   padding-right: 0.3em;
 }
 
+.panel-read {
+  background: #f9f9f9;
+}
 
 .content-buttons {
   margin-bottom: 15px;
-}
-
-.mispro {
-  color: red;
 }
 
 .thumbnail img {
@@ -65,4 +64,12 @@ footer {
 
 .mispro-letters {
   background-color: #e7c3c3;
+}
+
+.mispro-word {
+  background-color: #e7c3c3;
+}
+
+.search-icon {
+  color: #337ab7;
 }

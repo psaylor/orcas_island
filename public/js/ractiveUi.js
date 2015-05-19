@@ -1,4 +1,4 @@
-define(['jquery', 'ractive'], function($, Ractive) {
+define(['jquery', 'ractive', 'spoke'], function($, Ractive, spoke) {
 
     var data = {
 
@@ -9,6 +9,7 @@ define(['jquery', 'ractive'], function($, Ractive) {
         focusedFragment: 0,
         playing: false,
         playbackStates: [],
+        mispronouncedWords: [],
         playbackReady: function (fragNum) {
             return this.get('playbackStates')[fragNum] === true;
         }, // a true or false for each fragment's playback readiness
@@ -21,12 +22,21 @@ define(['jquery', 'ractive'], function($, Ractive) {
         and: function(a, b) {
             return a && b;
         },
+        isMispronounced: function (fragNum, word) {
+            var read = this.get('playbackStates')[fragNum];
+            if (!read) {
+                return false;
+            }
+            word = spoke.utils.normalizeString(word);
+            var inMispro = this.get('mispronouncedWords').indexOf(word) >= 0;
+            return (read && inMispro);
+        },
 
     };
 
     var element = $('#story-container');
     var template = element.html();
-    // console.log('\n\nRactive template:', template);
+
     /* Initialize the Ractive component */
     ractiveComponent = new Ractive({
         el: element,

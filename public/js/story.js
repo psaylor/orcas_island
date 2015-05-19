@@ -51,4 +51,6 @@ require(['ractiveUi', 'spoke', 'playerSetup', 'recorderSetup', 'misproUi'],
         uiComponent.set('playbackStates', uiData.playbackStates);
     });
 
+    var volumeMeterElement = $('.vol-meter');
+    var volumeMeter = spoke.microphone.VolumeMeter(volumeMeterElement);
 });
