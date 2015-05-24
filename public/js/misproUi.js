@@ -9,18 +9,30 @@ define(['jquery', 'ractive', 'spoke', 'ractiveUi'],
     var data = {
         misproWords: misproWords,
         magic: true,
-        prefix: function (obj) {
-            var mispro = obj.spelling.match(spellingRegex);
-            return obj.word.slice(0, mispro.index);
-        },
-        mispro: function (obj) {
-            var mispro = obj.spelling.match(spellingRegex);
-            return mispro[0];
-        },
-        suffix: function (obj) {
-            var mispro = obj.spelling.match(spellingRegex);
-            var lastIndex = mispro.index + mispro[0].length;
-            return obj.word.slice(lastIndex);
+        misproWord: function (obj) {
+            var spelling = obj.spelling.split('');
+            var word = obj.word.split('');
+            var outputHtml = ['<span class="word">'];
+            var inMispro = false;
+            word.forEach(function (val, index, arr) {
+                if (val === spelling[index]) {
+                    // this part was mispronounced
+                    if (!inMispro) {
+                       outputHtml.push('<span class="mispro-letters">');
+                       inMispro = true;
+                    }
+                } else {
+                    // these letters are fine
+                    if (inMispro) {
+                        outputHtml.push('</span>');
+                        inMispro = false;
+                    }
+                }
+                outputHtml.push(val);
+            });
+
+            outputHtml.push('</span>');
+            return outputHtml.join('');
         },
     };
 

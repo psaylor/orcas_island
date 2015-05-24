@@ -24,14 +24,11 @@
   <tr>
     <td>{{index+1}}</td>
     <td><span on-click="toggleHighlight" class="click-span">{{word}}
-      <!-- <div class="btn btn-default" on-click="toggleHighlight"> -->
         <i class="fa fa-search search-icon"></i>
       </span>
-      <!-- </div> -->
     </td>
     <td> 
-      <span class="word">{{prefix(this)}}<span class="mispro-letters">{{mispro(this)}}</span>{{suffix(this)}}
-      </span>
+      {{ misproWord(this)}}
       <div class="btn btn-danger" on-click="play">
         <i class="fa fa-play"></i>
       </div>
